@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head class="header-site">
+        <meta charset="UTF-8">
+        {% load static %}
+        {% load filter %}
+        {% load widget_tweaks %}
+            {% include "webpages/user_homepage.html" %}
+    <title>problem view by user</title>
+
+        <link rel="stylesheet" href="{% static 'files/bootstrap/css/bootstrap.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style2.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style3.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style4.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style5.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style6.css' %}"  type="text/css" >
+
+
+    </head>
+    <body>
+
+        {% if not problem%}
+        <div class="col-sm-8" style="margin-left:100px;">
+            <h3>There is no contest</h3>
+        </div>
+        {% endif %}
+
+        <div class="container col-8">
+                <table class="table table-success" >
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;"><strong>title</strong></th>
+                            <td style="width: 20%;"><strong>time limit(sec)</strong></td>
+                            <td style="width: 20%;"><strong>memory limit(MB)</strong></td>
+                            <td style="width: 20%;"><strong>problem pdf</strong></td>
+                        </tr>
+                    </thead>
+                    {% for i in problem %}
+                        <tr>
+                            <td style="width: 40%;">{{i.title}}</td>
+                            <td style="width: 20%;">{{i.time_limit}}</td>
+                            <td style="width: 20%;">
+                                {% if i.memory_limit %}
+                                    {{i.memory_limit}}
+                                {%else%}
+                                  -
+                                {%endif%}
+                            </td>
+                            <td style="width: 20%;"><a href="{{i.link}}">pdf</a></td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+        </div>
+
+
+
+
+    </body>
+    <footer>
+        {% include "webpages/footer.html" %}
+    </footer>
+</html>
+

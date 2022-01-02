@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head class="header-site">
+        <meta charset="UTF-8">
+        {% load static %}
+        {% load filter %}
+        {% load widget_tweaks %}
+            {% include "webpages/user_homepage.html" %}
+    <title>scoreboard view by user</title>
+
+        <link rel="stylesheet" href="{% static 'files/bootstrap/css/bootstrap.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style2.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style3.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style4.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style5.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style6.css' %}"  type="text/css" >
+
+
+    </head>
+    <body>
+
+        {% if not scoreboard%}
+        <div class="col-sm-8" style="margin-left:100px;">
+            <h3>There is no contest</h3>
+        </div>
+        {% else %}
+        <div class="container col-9" style="margin-left:100px;">
+            <h3>Scoreboard {{contest_title}}</h3>
+        </div>
+        {% endif %}
+        <div style="margin-left:50px;">
+            <table border="1" style="border-color:gray;">
+                <thead>
+                    <tr>
+                        <th align="center" style="width: 30px; padding: 15px;"><strong>Rank</strong></th>
+                        <th align="center" style="width: 300px;"><strong>Team</strong></th>
+                        <th align="center" style="width: 100px;;"><strong>Score</strong></th>
+                        {% for i in total_problems%}
+                        <th align="center" style="width:80px;"><strong>{{i.short_name}}</strong> </th>
+                        {%endfor%}
+                    </tr>
+                </thead>
+                {% for row in scoreboard %}
+                    <tr>
+                        {% for x,y,z in row %}
+
+                            <td align="center" style="background-color:{{y}};border-color:gray;padding: 10px;width:{{z}}px;">
+                               {{x}}
+                            </td>
+
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+    <footer>
+        {% include "webpages/footer.html" %}
+    </footer>
+</html>
+

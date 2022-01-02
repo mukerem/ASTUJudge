@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head class="header-site">
+        <meta charset="UTF-8">
+        {% load static %}
+        {% load filter %}
+        {% load widget_tweaks %}
+            {% include "webpages/admin_homepage.html" %}
+    <title>submission view by admin</title>
+
+        <link rel="stylesheet" href="{% static 'files/bootstrap/css/bootstrap.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style2.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style3.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style4.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style5.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style6.css' %}"  type="text/css" >
+
+
+    </head>
+    <body>
+
+        {% if not submit%}
+        <div class="col-sm-8" style="margin-left:100px;">
+            <h3>There is no submit</h3>
+        </div>
+        {% endif %}
+        <div class="container col-10">
+            <table class="table table-primary" >
+                <thead>
+                <tr>
+                    <th style="width: 5%;"><strong>SID</strong></th>
+                    <th style="width: 20%;"><strong>time</strong></th>
+                    <td style="width: 20%;"><strong>user</strong></td>
+                    <td style="width: 25%;"><strong>problem</strong></td>
+                    <td style="width: 10%;"><strong>language</strong></td>
+                    <td style="width: 20%;"><strong>result</strong></td>
+                </tr>
+                </thead>
+                {% for i in submit %}
+
+
+                        <tr>
+                            <td style="width: 5%;">{{i.id}}</td>
+                            <td style="width: 20%;">{{i.submit_time}}</td>
+                            <td style="width: 20%;">{{i.user}}</td>
+                            <td style="width: 25%;">{{i.problem}}</td>
+                            <td style="width: 10%;">{{i.language}}</td>
+                            {%if i.result == 'Correct'%}
+                                <td style="width: 20%;color:green;">{{i.result}}</td>
+                            {%else%}
+                                <td style="width: 20%;color:red;">{{i.result}}</td>
+                            {%endif%}
+                        </tr>
+
+
+
+                {% endfor %}
+            </table>
+        </div>
+
+
+
+    </body>
+    <footer>
+        {% include "webpages/footer.html" %}
+    </footer>
+</html>

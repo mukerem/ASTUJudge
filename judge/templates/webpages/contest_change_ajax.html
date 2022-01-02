@@ -1,0 +1,12 @@
+{% for i in contest%}
+    {% if i.selected == 'yes' %}
+        <option   value="{{i.id}}" selected="selected" >
+            {{i.title}}
+        </option>
+    {% else %}
+        <option   value="{{i.id}}">
+            {{i.title}}
+        </option>
+    {%endif%}
+
+{%endfor%}

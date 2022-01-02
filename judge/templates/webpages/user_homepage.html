@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head class="header-site">
+        <meta charset="UTF-8">
+        {% load static %}
+        {% load widget_tweaks %}
+        {% load filter %}
+        <link rel="stylesheet" href="{% static 'files/bootstrap/css/bootstrap.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style2.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style3.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style4.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style5.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style6.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style7.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style8.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style9.css' %}"  type="text/css" >
+
+        <title>{% block title %} {% endblock %}</title>
+
+        {% block header %}
+        <div class="row" id="user-home-page">
+            <div class="col-sm-4">
+                <img src="{% static 'Images/cd.png' %}" height="110" width="200">
+            </div>
+            <div class="col-sm-4" align="right" style="margin-top:15px;;color:white;font-size:20px;">
+                     ASTU Judge
+            </div>
+            <div class="col-sm-4" align="right" style="margin-top:15px;">
+                <form enctype="multipart/form-data" id="contestForm" data-specific-code-url="{% url 'ajax_load_contest' %}" method="post" novalidate>
+                    {% csrf_token %}
+                    {% if contest%}
+                        <select id="id_contest" name="contest" style="width:25%; margin-right:2%;font-size:12px;">
+                                {% for i in contest%}
+                                    {% if i.selected == 'yes' %}
+                                        <option   value="{{i.id}}" selected="selected" >
+                                            {{i.title}}
+                                        </option>
+                                    {% else %}
+                                        <option   value="{{i.id}}">
+                                            {{i.title}}
+                                        </option>
+                                    {%endif%}
+
+                                {%endfor%}
+                        </select>
+                    {%endif%}
+                </form>
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block navbar %}
+        <nav class="navbar navbar-expand-md bg-dark navbar-light" >
+            <div class="main" style="margin-left:5%;">
+                <ul class="mainnav">
+                    <li class="hassubs"><a href="/overview/">overview</a>
+
+                    </li>
+                    <li class="hassubs"><a href="/view-problem-by-user/">problem</a>
+
+                    </li>
+
+                    <li class="hassubs"><a href="/view-scoreboard-by-user/">scoreboard</a>
+
+                    </li>
+
+                </ul>
+
+                <a title="logout"  href="{% url 'logout' 'user' %}" style="margin-right:3%;float:right;"><img src="{% static 'Images/logout.png' %}" height="30" width="30"></a>
+                <a  title="view profile" href="/user-profile/" style="margin-right:1%;float:right;"><img src="{% static 'Images/profile.png' %}" height="30" width="30"></a>
+
+                <br style="clear: both;">
+            </div>
+        </nav>
+        {% endblock %}
+    </head>
+    <body>
+        <br>
+        {% include "webpages/message.html" %}
+        <br>
+        {% block content %}{% endblock %}
+
+    </body>
+    
+    <footer>
+        {% block foot %}
+            <div class="footer">
+                ASTU Judge © 2018
+            </div>
+        {% endblock %}
+    </footer>
+
+         <script src="{% static 'files/bootstrap/jquery/jquery-3.3.1.min.js' %}"></script>
+            <script>
+                $("#id_contest").change(function (){
+                    var url = $("#contestForm").attr("data-specific-code-url");
+                    var e = document.getElementById("id_contest");
+                    var codeId = e.options[e.selectedIndex].value;
+                    $.ajax({
+                        url: url,
+                        data: {
+                            'code': codeId
+                        },
+                        success: function (data) {
+                            $("#id_contest").html(data);
+                        }
+                   });
+                });
+            </script>
+            
+
+</html>

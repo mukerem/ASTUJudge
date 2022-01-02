@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head class="header-site">
+        <meta charset="UTF-8">
+        {% load static %}
+        {% load filter %}
+        {% load widget_tweaks %}
+            {% include "webpages/admin_homepage.html" %}
+    <title>user view by admin</title>
+
+        <link rel="stylesheet" href="{% static 'files/bootstrap/css/bootstrap.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style2.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style3.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style4.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style5.css' %}"  type="text/css" >
+        <link rel="stylesheet" href="{% static 'files/style6.css' %}"  type="text/css" >
+
+
+    </head>
+    <body>
+
+        {% if not user%}
+        <div class="col-sm-8" style="margin-left:100px;">
+            <h3>There is no result</h3>
+        </div>
+        {% endif %}
+        {% for i in user %}
+        <div class="container col-8">
+                <table  class="table table-striped">
+                    <tr>
+                        <td style="width: 22%;"><strong>Name:</strong></td>
+                        <td style="width: 50%;">{{i.name}} {{i.middle_name}}  {{i.last_name}}</td>
+                        <td style="width: 28%;" align="right">
+                            <input type="button"  id ="button-{{i.id}}" onclick="userFun({{i.id}})" value="" title="view detail"
+                            style="width:15%;height:100%; background:transparent url({% static 'Images/expand3.png' %}) no-repeat;border:none;size:100%;cursor:pointer;">
+                            <a  href="{% url 'DeleteUserConfirm' i.id %}" title="delete"> <img src="{% static 'Images/delete.png' %}" height="20" width="20"></a>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="container col-8">
+           <div class="row" id="user-{{i.id}}"  style="display:none;">
+
+            <div class="col-sm-10">
+                <table class="table table-success" >
+                        {% if i.phone%}
+                        <tr>
+                            <td style="width: 30%;"><strong>Phone:</strong></td>
+                            <td style="width: 70%;">{{i.phone}}</td>
+                        </tr>
+                        {%endif%}
+
+                        <tr>
+                            <td style="width: 30%;"><strong>E-mail:</strong></td>
+                            <td style="width: 70%;">{{i.email}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 30%;"><strong>Gender:</strong></td>
+                            <td style="width: 70%;">{{i.sex}}</td>
+                        </tr>
+
+
+                        <tr>
+                            <td style="width: 30%;"><strong>Register date:</strong></td>
+                            <td style="width: 70%;">{{i.register_date}}</td>
+                        </tr>
+                </table>
+
+            </div>
+            <div class="col-sm-2">
+                <img src="{% static i.image %}"  height="120" width="100">
+            </div>
+            </div>
+
+        </div>
+        <div class="container col-8"><hr></div>
+        {% endfor %}
+
+        <script>
+    function userFun(par) {
+    var y ="button-"+par;
+    var x = document.getElementById("user-"+par);
+    if (x.style.display === "none") {
+        x.style.display = "flex";
+        document.getElementById(y).style="width:15%;height:100%; background:transparent url({% static 'Images/collapse3.png' %}) no-repeat;border:none;size:100%;cursor:pointer;";
+        document.getElementById(y).title="hide detail";
+    } else {
+        x.style.display = "none";
+        document.getElementById(y).style="width:15%;height:100%; background:transparent url({% static 'Images/expand3.png' %}) no-repeat;border:none;size:100%;cursor:pointer;";
+        document.getElementById(y).title="view detail";
+    }
+}
+
+</script>
+
+        <script>
+    function userFun2(par) {
+    var y ="button-"+par;
+    var x = document.getElementById("user-"+par);
+    if (x.style.display === "none") {
+        x.style.display = "flex";
+        document.getElementById(y).value="hide  profile";
+        document.getElementById(y).style.backgroundColor='#dc3545';
+    } else {
+        x.style.display = "none";
+        document.getElementById(y).value="view profile";
+        document.getElementById(y).style.backgroundColor='#007bff';
+    }
+}
+
+</script>
+
+    </body>
+    <footer>
+        {% include "webpages/footer.html" %}
+    </footer>
+</html>
+
+
